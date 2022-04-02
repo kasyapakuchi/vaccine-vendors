@@ -1,0 +1,50 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080/
+    description: Generated server url
+paths:
+  /{id}:
+    get:
+      tags:
+        - vendor-controller
+      operationId: getVaccineVendors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VaccineVendors'
+components:
+  schemas:
+    VaccineVendors:
+      type: object
+      properties:
+        vaccineId:
+          type: string
+        vendorId:
+          type: string
+        vaccineName:
+          type: string
+        vendorName:
+          type: string
+        location:
+          type: string
+        city:
+          type: string
+        availableCount:
+          type: integer
+          format: int32
+        expiryDate:
+          type: string
