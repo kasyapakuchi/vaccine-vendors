@@ -6,13 +6,37 @@ servers:
   - url: http://localhost:8080/
     description: Generated server url
 paths:
-  /{id}:
+  /vendors/update/{vaccineid}/{vendorid}:
+    post:
+      tags:
+        - vendor-controller
+      operationId: updateVaccineStock
+      parameters:
+        - name: vaccineid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vendorid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /vendors/{vaccineid}/{vendorid}:
     get:
       tags:
         - vendor-controller
-      operationId: getVaccineVendors
+      operationId: getListByVaccinesVendors
       parameters:
-        - name: id
+        - name: vaccineid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vendorid
           in: path
           required: true
           schema:
@@ -25,26 +49,61 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/VaccineVendors'
+                  $ref: '#/components/schemas/Vaccines'
+  /vendors/vendorId/{vendorid}:
+    get:
+      tags:
+        - vendor-controller
+      operationId: getListByVendorId
+      parameters:
+        - name: vendorid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vaccines'
+  /vendors/vaccineId/{vaccineid}:
+    get:
+      tags:
+        - vendor-controller
+      operationId: getListByVaccineId
+      parameters:
+        - name: vaccineid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vaccines'
 components:
   schemas:
-    VaccineVendors:
+    Vaccines:
       type: object
       properties:
-        vaccineId:
+        vaccine_id:
           type: string
-        vendorId:
+        vendor_id:
           type: string
-        vaccineName:
+        vaccine_name:
           type: string
-        vendorName:
-          type: string
-        location:
-          type: string
-        city:
-          type: string
-        availableCount:
+        available_count:
           type: integer
           format: int32
-        expiryDate:
+        exp_date:
           type: string
+          format: date-time
